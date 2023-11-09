@@ -1,0 +1,1 @@
+segment_anything>=1.0 
