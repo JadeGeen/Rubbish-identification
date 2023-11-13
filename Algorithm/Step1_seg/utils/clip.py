@@ -22,8 +22,10 @@ def clip_pic(picture: cv2.UMat, n: int, overlap: float) -> List[cv2.UMat]:
 
     #初始化分割后的图片列表
     pic_list = []
+    bias_list = []
     #进行分割
     for i in range(n):
         for j in range(n):
             pic_list.append(picture[i * length_height - i * overlap_height : (i + 1) * length_height - i * overlap_height, j * length_width - j * overlap_width : (j + 1) * length_width - j * overlap_width])
-    return pic_list
+            bias_list.append([i * length_height - i * overlap_height,j * length_width - j * overlap_width ])
+    return pic_list, bias_list
