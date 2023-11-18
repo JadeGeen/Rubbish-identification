@@ -6,6 +6,7 @@
 - Flask 3.0.0
 - requests 2.28.1
 - json 2.0.9
+- opencv-python
 
 ## Project structure
 
@@ -14,7 +15,10 @@ Rubbish Identification
 │  README.md             # readmefirst
 │  README-API.md         # 接口约定
 │
+├─Algorithm              
+│
 ├─App                    # TODO:服务器设计
+│      Config.py
 │      Fileprocess.py    # TODO:切帧
 │      main.py
 │      Routes.py         # TODO:路由

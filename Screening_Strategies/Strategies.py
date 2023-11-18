@@ -9,6 +9,6 @@ class my_struct:
         self.pic_array = pic_array
 
 
-def screening_startegies(pic : my_struct, ctex:list)->int:
+def screening_strategies(pic : my_struct, ctex:list)->int:
 # TODO：筛选策略，具体参数和返回值待定
     return pic.label
