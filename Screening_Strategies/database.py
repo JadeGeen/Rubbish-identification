@@ -126,3 +126,44 @@ def data_load(camera_id, time = None):
             return my_struct(camera_id,result[1],bbox_list,pic_array)
         else:
             return None
+        
+def data_relabel(camera_id, time)->my_struct:
+    """
+    :param camera_id: 摄像头编号
+    :param time: 时间信息, 当未给出时进行摄像头单主键查询
+    :return: 自定义数据结构
+    """
+    table_check(camera_id)
+
+    conn = mysql.connector.connect(
+    host = host,
+    user = user,
+    password = password,
+    database = database
+)
+    table_name = f'camera_table_{camera_id}'
+    cursor = conn.cursor()
+    select_query = f'SELECT * FROM {table_name} WHERE time_str = %s'
+    cursor.execute(select_query, (time,))
+    # 获取查询结果
+    result = cursor.fetchone()
+    
+    if result:
+        list_value = result[2]
+        bbox_list = json.loads(list_value)
+        for i in bbox_list:
+            i[4] = 0
+        list_value = json.dumps(bbox_list)
+        update_query = f'UPDATE {table_name} SET bboxs_list= %s WHERE time_str=%s'
+        cursor.excute(update_query,(list_value,time))
+        conn.close()
+        array_str = result[3]
+        element_size = np.dtype(np.int32).itemsize  # 这里假设数组是 int32 类型的
+        buffer_size = len(array_str)
+        adjusted_buffer_size = (buffer_size // element_size) * element_size  # 确保长度是元素大小的整数倍
+        # 将调整后的字节串转换为 NumPy 数组
+        pic_array = np.frombuffer(array_str[:adjusted_buffer_size], dtype=np.int32)
+        return my_struct(camera_id, time, bbox_list,pic_array)
+    else:
+        conn.close()
+        return None

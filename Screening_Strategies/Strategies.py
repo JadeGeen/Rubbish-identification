@@ -34,9 +34,6 @@ def Iou(box1, box2, wh=False):
     return iou
 
 def match_bboxes(bboxes1, bboxes2):
-    # 根据IOU将两个边界框列表中的相同边界框匹配起来
-    matched_pairs = []
-
     for box1 in bboxes1:
         max_iou = 0
         match = None

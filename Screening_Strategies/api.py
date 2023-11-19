@@ -1,4 +1,4 @@
-from database import table_check, data_save, data_load
+from database import table_check, data_save, data_load, data_relabel
 from Strategies import screening_startegies, my_struct
 import numpy as np
 
@@ -28,4 +28,12 @@ def api_search(camera_id:int, time_msg:str)->my_struct:
     :return: 框信息，根据后续要求更改
     """
     result = data_load(camera_id=camera_id, time=time_msg)
+    return result.bboxs_list
+
+def api_clear(camera_id:int, time_msg:str)->my_struct:
+    """
+    :param camera_id: 摄像头编号
+    :param time: 时间信息
+    """
+    result = data_relabel(camera_id=camera_id, time=time_msg)
     return result.bboxs_list
