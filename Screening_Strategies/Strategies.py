@@ -7,8 +7,7 @@ class my_struct:
         self.bboxs_list = bboxs_list
         self.pic_array = pic_array
 
-
-def screening_startegies(pic : my_struct, ctex:my_struct)->None:
+def screening_strategies(pic : my_struct, ctex:my_struct)->None:
 # TODO：筛选策略，具体参数和返回值待定
     match_bboxes(pic.bboxs_list, ctex.bboxs_list)
 

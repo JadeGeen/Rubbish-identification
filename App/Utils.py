@@ -1,8 +1,32 @@
-# TODO:下载视频
-def movie_downdload(url, fileID):
-    return fileID
+from Screening_Strategies.api import api
+from multiprocessing import Queue
+
+pic_processed = Queue()
 
 
-# TODO:视频对应的切帧数量，维护一张视频——帧数表供查询
-def get_pic_number(fileID):
-    return None
+# 算法服务器结果入队
+def send_Pic(data):
+    pic_processed.put(data)
+
+
+def stragtegies_work():
+    # 单图测试
+    count = 0
+
+    while 1:
+        if pic_processed.empty():
+            continue
+        else:
+            data = pic_processed.get()
+            api(
+                data['userID'],
+                data['time_msg'],
+                data['label'],
+                data['bboxs_list'],
+                data['pic_array'],
+            )
+            count += 1
+
+        # for test
+        if count >= 1:
+            break
