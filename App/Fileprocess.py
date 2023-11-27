@@ -20,7 +20,7 @@ def time_cut(ID, url, time):
     # 单视频单图测试
     pic, cut_time = fileprocess(url)
     requests.post(
-        config['Alg_addr'], data={'pic': pic, 'time_msg': cut_time, 'userID': ID}
+        config['Alg_addr']+'/upload', data={'pic': pic, 'time_msg': cut_time, 'userID': ID}
     )
 
     '''
