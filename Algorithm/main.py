@@ -1,6 +1,10 @@
 from flask import Flask, request
+
+import numpy as np
 import json
 import requests
+from concurrent.futures import ProcessPoolExecutor
+
 
 from api import api
 
@@ -8,6 +12,16 @@ app = Flask(__name__)
 base = None
 target = None
 contra = False
+
+pool = ProcessPoolExecutor(2)
+
+def Judge(target, base = None):
+    if base == None and type(target) == np.ndarray:
+        return 'Upload successfully'
+    elif type(base) == np.ndarray and type(target) == np.ndarray:
+        return 'Upload successfully'
+    return 'Upload failed'
+
 
 @app.route('/')
 def hello():
@@ -20,14 +34,16 @@ def upload():
     if contra:
         base = data[base]
         target = data[target]
-        
     else:
         target = data[target]
-    return 'Upload successfully'
+    str = pool.submit(Judge, args = (target, base) if contra else (target))
+    return str
+
+data = pool.submit(api, (target, contra, base) if contra else (target, contra))
 
 @app.route('/download', metheds = ['GET'])
 def download():
-    res = api(target, contra, base) if contra else api(target, contra)
+    res = json.dumps(data)
     return res
 
 if __name__ == '__main__':
