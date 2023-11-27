@@ -3,48 +3,39 @@
 ## APP FOR USER
 
 ```python
-@app.route('/user-uploadfile', methods=['POST'])
+@app.route('/user-login', methods=['POST'])
 input:{
     "url": str,
+    "userID": str,
+    ...
 }
 output:{
-    "fileID": str, # 视频编号
+    ...
 }
 
 @app.route('/user-getRes', methods=['GET'])
 input:{
-    "fileID": str,
+    "userID": str,
+    "time_msg": str
+    ...
 }
 output:{
     "res":     # 识别结果，形式待定
     "msg": str # 信息 
+    ...
 }
 ```
 
-## ALG FOR APP
+## APP FOR ALG
 
 ```python
-@alg.route('/app-uploadfile', methods=['POST'])
+@alg.route('/app-postPic', methods=['POST'])
 input:{
-    "url": str,
+    "res": json,
+    ...
 }
 output:{
-    "fileID": str, # 视频编号
+    ...
 }
 
-@alg.route('/app-getRes', methods=['GET'])
-input:{
-    "fileID": str,
-}
-output:{
-    "res": json, # 算法输出结果，不存在时为空
-}
-
-@alg.route('/delete-data', methods=['POST'])
-input:{
-    "fileID": str,
-}
-output:{
-    "state": int, # 0成功1失败
-}
 ```
