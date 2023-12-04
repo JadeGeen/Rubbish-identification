@@ -10,6 +10,7 @@ input : {
     base : ndarray #基准图片
 }
 output : {
-    res : dict{list[], str} #图片信息，返回一个字典，分别为切割后的图片信息及其标签
+    target : ndarray #目标图片
+    res : dict{list[], str} #图片信息，返回一个字典，分别为切割信息及切割部分标签
 }
 ```
