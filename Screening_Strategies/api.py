@@ -1,16 +1,16 @@
-from database import table_check, data_save, data_load, data_relabel
+from database import data_save, data_load, data_relabel
 from Strategies import screening_startegies, my_struct
 from init import myconfig
 import numpy as np
 
 
-def api(camera_id:int, time_msg:str, bboxs_list : dict, pic:np.ndarray)->my_struct:
+def api_save(camera_id:int, time_msg:str, bboxs_list : dict, pic:np.ndarray):
     """
     :param camera_id: 摄像头编号
     :param time: 时间信息
     :bboxs_list: 框信息(dict, key为label, value为对应bbox)
     :pic: 图片转换的numpy数组
-    :return: 自定义数据结构
+    :return: tuple,
     """
     black_label_list = myconfig.camera_list_black[camera_id]
     white_label_list = myconfig.camera_list_white[camera_id]
@@ -35,7 +35,7 @@ def api(camera_id:int, time_msg:str, bboxs_list : dict, pic:np.ndarray)->my_stru
     screening_startegies(data, white_items_bboxs, black_items_bboxs, ctext)
     # 存储筛选后的数据
     data_save(data)
-    return data
+    return data.black_item_bbox, data.pic_array
 
 # 用于用户查询数据库
 def api_search(camera_id:int, time_msg:str):
@@ -52,9 +52,29 @@ def api_search(camera_id:int, time_msg:str):
     bbox_list, pic = data_load(camera_id, 'black', time_msg)
     return (bbox_list, pic)
 
-def api_clear(camera_id:int, time_msg:str)->None:
+def api_clear(camera_id:int, time_msg:str):
     """
     :param camera_id: 摄像头编号
     :param time: 时间信息
     """
     data_relabel(camera_id, 'black', time_msg)
+    bbox_list, pic = data_load(camera_id, 'black', time_msg)
+    return (bbox_list, pic)
+
+def api_wblist_change(camera_id:int, label, wb:int, tag:bool):
+    """
+    :param camera_id: 摄像头编号
+    :param label: 要进行操作的标签
+    :param wb: 0为对白名单进行操作,1为对黑名单进行操作
+    :param tag: 操作类型,True为添加,False为删除
+    逐个增添或删改任意摄像头的黑白名单
+    """
+    target_list = myconfig.camera_list_white if wb == 0 else myconfig.camera_list_black
+    if tag == True:
+        if camera_id in target_list.keys():
+            target_list[camera_id].append(label)
+        else:
+            target_list[camera_id] = [label]
+    else:
+        if camera_id in target_list.keys():
+            target_list[camera_id].remove(label)

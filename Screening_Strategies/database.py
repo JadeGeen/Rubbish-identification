@@ -8,19 +8,19 @@ user =  myconfig.user
 password = myconfig.password
 host = myconfig.host
 database = myconfig.database
-# 检查数据表是否创建
 def table_check(camera_id : int):
+    """
+    :param camera_id: 摄像头id
+    检测表是否存在以建表
+    """
     conn = mysql.connector.connect(
     host = host,
     user = user,
     password = password,
     database = database
 )
-    # 创建一个游标对象
     cursor = conn.cursor()
-    # 定义要检查是否存在的表名
     table_name = f'camera_table_{camera_id}'
-    # 执行查询
     check_table_query = f"SELECT table_name FROM information_schema.tables WHERE table_name = '{table_name}'"
     cursor.execute(check_table_query)
     result = cursor.fetchone()
@@ -36,7 +36,6 @@ def table_check(camera_id : int):
             )
         ''')
 
-        # 提交更改
         conn.commit()
     conn.close()
   
@@ -44,7 +43,6 @@ def data_save(data:my_struct)->None:
     """
     :param data: 自定义数据结构
     """
-    # 检查表格是否已经创立
     table_check(data.camera_id)
     
     conn = mysql.connector.connect(
