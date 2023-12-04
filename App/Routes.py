@@ -1,8 +1,10 @@
 from flask import Flask, request
 import json
+import threading
 
-from Utils import send_Pic
-from Screening_Strategies.api import api_search
+from Screening_Strategies.api import api, api_search, api_clear
+from Config import config
+
 
 app = Flask(__name__)
 
@@ -17,27 +19,46 @@ def login():
     data = json.loads(str(request.data, 'utf-8'))
     userID = str(data['userID'])
     url = str(data['url'])
-    # TODO: 保存摄像头配置文件, 形式待定
+    # 保存摄像头配置，写入txt
+    with open(config['Login_msg'], 'a') as f:
+        f.write(userID + ":" + url + "\n")
 
 
 @app.route('/user-getRes', methods=['GET'])
 def get_Res():
     data = json.loads(str(request.data, 'utf-8'))
     userID = int(data['userID'])
-    time = data['time']
-    # TODO: add more needed args
-    res = api_search(userID, time)
+    time_msg = data['time_msg']
+    res = api_search(userID, time_msg)
     if res:
         return res
     else:
-        msg = 'FileID:' + str(userID) + 'Not done yet.'
+        msg = '<h1>FileID:' + str(userID) + 'Not done yet.</h1>'
         return msg
+
+
+@app.route('/user-clear', methods=['POST'])
+def clear():
+    data = json.loads(str(request.data, 'utf-8'))
+    userID = int(data['userID'])
+    time_msg = data['time_msg']
+    api_clear(userID, time_msg)
 
 
 @app.route('/alg-postPic', methods=['POST'])
 def post_Pic():
     data = json.loads(str(request.data, 'utf-8'))
-    send_Pic(data['res'])
+    strategy = threading.Thread(
+        target=api,
+        args=(
+            data['userID'],
+            data['time_msg'],
+            data['bboxs_list'],
+            data['pic'],
+        ),
+    )
+    strategy.start()
+    return "<h1>Using strategy</h1>"
 
 
 def app_RUN():
