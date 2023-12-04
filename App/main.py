@@ -10,19 +10,13 @@ from Fileprocess import time_cut
 '''
 
 # for test
-test_ID = 1
-test_path = r'Data/Camera.mp4'
-test_sec = 60
+test_ID = 50000
 
 
 if __name__ == '__main__':
     t1 = threading.Thread(
         target=time_cut,
-        args=(
-            test_ID,
-            test_path,
-            test_sec,
-        ),
+        args=(test_ID,),
     )
     t2 = threading.Thread(target=app_RUN)
     t1.start()
