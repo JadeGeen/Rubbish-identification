@@ -6,6 +6,7 @@ from Config import config
 
 test_save_path = r'Data'
 
+
 # 切帧
 def fileprocess(url):
     video = cv2.VideoCapture(url)
@@ -16,11 +17,22 @@ def fileprocess(url):
     return pic, cut_time
 
 
-def time_cut(ID, url, time):
+def time_cut(ID):
     # 单视频单图测试
+    r = requests.post(config['Getjs_addr'])
+    data = r.json()
+    js = data['jsession']
+    print("Conversation ID(jsession):" + str(js))
+
+    url = config['Getvideo_addr_L'] + js + config['Getvideo_addr_R']
+    r2 = requests.post(url)
+    r2 = r2.json()
+    print(r2['result'])
+
     pic, cut_time = fileprocess(url)
     requests.post(
-        config['Alg_addr']+'/upload', data={'pic': pic, 'time_msg': cut_time, 'userID': ID}
+        config['Alg_addr'] + '/upload',
+        data={'target': pic, 'contra': False, 'time_msg': cut_time, 'userID': ID},
     )
 
     '''
