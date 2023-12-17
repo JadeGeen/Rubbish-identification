@@ -20,10 +20,9 @@ def api_save(camera_id:int, time_msg:str, bboxs_list : dict, pic:np.ndarray):
     white_items_bboxs = []
     for i in white_label_list:
         white_items_bboxs += bboxs_list[i]
-    data = my_struct(camera_id, time_msg, [], [], pic)
+    data = my_struct(camera_id, time_msg, [], [], None)
     # 获取相关摄像头之前的黑白名单
-    ctex_white, Pic = data_load(camera_id, 'white')
-    ctex_black, Pic = data_load(camera_id, 'black')
+    ctex_white, ctex_black, Pic = data_load(camera_id)
     ctext = []
     for i in ctex_white:
         box_label = i.append('white')
@@ -44,13 +43,9 @@ def api_search(camera_id:int, time_msg:str):
     :param time: 时间信息
     :return: 黑名单框以及图片信息，根据后续要求更改
     """
-    # black_label_list = myconfig.camera_list_black[camera_id]
-    # bbox_list = []
-    # for i in black_label_list:
-    #     result = data_load(camera_id=camera_id,label=i, time=time_msg)
-    #     bbox_list.append(result)
-    bbox_list, pic = data_load(camera_id, 'black', time_msg)
-    return (bbox_list, pic)
+
+    white_bbox_list, black_bbox_list, pic = data_load(camera_id, time_msg)
+    return (black_bbox_list, pic)
 
 def api_clear(camera_id:int, time_msg:str):
     """
@@ -58,8 +53,8 @@ def api_clear(camera_id:int, time_msg:str):
     :param time: 时间信息
     """
     data_relabel(camera_id, 'black', time_msg)
-    bbox_list, pic = data_load(camera_id, 'black', time_msg)
-    return (bbox_list, pic)
+    white_bbox_list, black_bbox_list, pic = data_load(camera_id, time_msg)
+    return (black_bbox_list, pic)
 
 def api_wblist_change(camera_id:int, label, wb:int, tag:bool):
     """
