@@ -7,6 +7,7 @@
 input:{
     "url": str,
     "userID": str,
+    "intervalSEC": int, # 切帧时间间隔，单位为秒
     "white":str, # 摄像头白名单，用','隔开
     "black":str# 黑名单，同上
     ...
@@ -15,6 +16,7 @@ output:{
     ...
 }
 
+'''
 @app.route('/user-getRes', methods=['GET'])
 input:{
     "userID": str,
@@ -26,6 +28,7 @@ output:{
     "msg": str # 信息 
     ...
 }
+'''
 
 @app.route('/user-wblist_change', methods=['POST'])
 input:{

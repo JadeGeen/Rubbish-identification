@@ -1,5 +1,6 @@
 import cv2
 import requests
+import time
 from datetime import datetime
 
 from Config import config
@@ -8,7 +9,7 @@ test_save_path = r'Data'
 
 
 # 切帧
-def fileprocess(url):
+def frame_cut(url):
     video = cv2.VideoCapture(url)
     ret, pic = video.read()
     cut_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -17,8 +18,26 @@ def fileprocess(url):
     return pic, cut_time
 
 
+# 间隔时间切帧
+def fileprocess(ID, url, sec):
+    Imgld = 0
+    while 1:
+        pic, cut_time = frame_cut(url)
+        requests.post(
+            config['Alg_addr'] + '/upload',
+            data={
+                'target': pic,
+                'contra': False,
+                'userID': ID,
+                'Imgld': Imgld,
+                'time_msg': cut_time,
+            },
+        )
+        time.sleep(sec)
+
+
+# 单视频单图测试
 def time_cut(ID):
-    # 单视频单图测试
     r = requests.post(config['Getjs_addr'])
     data = r.json()
     js = data['jsession']
@@ -29,7 +48,7 @@ def time_cut(ID):
     r2 = r2.json()
     print(r2['result'])
 
-    pic, cut_time = fileprocess(url)
+    pic, cut_time = frame_cut(url)
     requests.post(
         config['Alg_addr'] + '/upload',
         data={'target': pic, 'contra': False, 'time_msg': cut_time, 'userID': ID},
