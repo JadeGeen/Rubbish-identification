@@ -37,15 +37,15 @@ def api_save(camera_id:int, time_msg:str, bboxs_list : dict, pic:np.ndarray):
     return data.black_item_bbox, data.pic_array
 
 # 用于用户查询数据库
-def api_search(camera_id:int, time_msg:str):
-    """
-    :param camera_id: 摄像头编号
-    :param time: 时间信息
-    :return: 黑名单框以及图片信息，根据后续要求更改
-    """
+# def api_search(camera_id:int, time_msg:str):
+#     """
+#     :param camera_id: 摄像头编号
+#     :param time: 时间信息
+#     :return: 黑名单框以及图片信息，根据后续要求更改
+#     """
 
-    white_bbox_list, black_bbox_list, pic = data_load(camera_id, time_msg)
-    return (black_bbox_list, pic)
+#     white_bbox_list, black_bbox_list, pic = data_load(camera_id, time_msg)
+#     return (black_bbox_list, pic)
 
 def api_clear(camera_id:int, time_msg:str):
     """
