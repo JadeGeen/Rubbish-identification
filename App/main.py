@@ -5,7 +5,7 @@ from Fileprocess import time_cut
 
 '''
 多线程：
-1: 轮询摄像头发request
+1: 轮询摄像头发request(仅单视频测试，后续删除，由服务器自动生成线程)
 2: 服务器通信
 '''
 
