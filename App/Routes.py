@@ -3,7 +3,7 @@ import json
 import threading
 
 from Config import config
-from Screening_Strategies.api import api_search, api_clear, api_wblist_change
+from Screening_Strategies.api import api_clear, api_wblist_change
 from Fileprocess import fileprocess
 from Utils import send_res
 
@@ -29,8 +29,10 @@ def login():
             userID + " " + url + " " + intervalSEC + " " + white + " " + black + "\n"
         )
     # 每个摄像头启用一个新线程
-    new_th = threading.Thread(target=fileprocess, args=(userID, url, intervalSEC))
+    new_th = threading.Thread(
+        target=fileprocess, args=(userID, url, intervalSEC))
     new_th.start()
+
 
 '''
 @app.route('/user-getRes', methods=['GET'])
@@ -46,7 +48,8 @@ def get_Res():
         return msg
 '''
 
-@app.route('/user-wblist_change', method=['POST'])
+
+@app.route('/user-wblist_change', methods=['POST'])
 def wblist_change():
     data = json.loads(str(request.data, 'utf-8'))
     userID = int(data['userID'])

@@ -1,8 +1,8 @@
 import mysql.connector
 import numpy as np
 import json
-from init import myconfig
-from Strategies import  my_struct
+from .init import myconfig
+from .Strategies import  my_struct
 from datetime import datetime, timedelta
 
 user =  myconfig.user

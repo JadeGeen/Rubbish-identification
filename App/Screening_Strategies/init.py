@@ -1,5 +1,7 @@
 import mysql.connector
-from config import config
+from .config import config
+
+import sys
 
 # 初始化参数
 myconfig = config()
@@ -12,9 +14,10 @@ conn = mysql.connector.connect(
 
 # 创建一个数据库
 mycursor = conn.cursor()
-mycursor.execute(f"CREATE DATABASE {myconfig.database}")
+mycursor.execute(f"CREATE DATABASE IF NOT EXISTS {myconfig.database}")
 conn.close()
-with open('data.txt', 'r') as file:
+print(sys.path)
+with open('./Screening_Strategies/data.txt', 'r') as file:
     for line in file:
         cont = list(line.strip().split())
         camera_id = int(cont[0])

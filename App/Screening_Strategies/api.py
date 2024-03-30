@@ -1,6 +1,6 @@
-from database import data_save, data_load, data_relabel
-from Strategies import screening_startegies, my_struct
-from init import myconfig
+from .database import data_save, data_load, data_relabel
+from .Strategies import screening_strategies, my_struct
+from .init import myconfig
 import numpy as np
 
 
@@ -31,7 +31,7 @@ def api_save(camera_id:int, time_msg:str, bboxs_list : dict, pic:np.ndarray):
         box_label = i.append('black')
         ctext.append(box_label)
     # 筛选获取新label
-    screening_startegies(data, white_items_bboxs, black_items_bboxs, ctext)
+    screening_strategies(data, white_items_bboxs, black_items_bboxs, ctext)
     # 存储筛选后的数据
     data_save(data)
     return data.black_item_bbox, data.pic_array
