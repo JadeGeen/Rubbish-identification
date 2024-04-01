@@ -1,6 +1,6 @@
 import threading
 from Routes import app_RUN
-from Fileprocess import time_cut
+from Fileprocess import time_cut, local_single_test
 
 
 '''
@@ -11,12 +11,13 @@ from Fileprocess import time_cut
 
 # for test
 test_ID = 50000
+test_URL = "Data/Camera.mp4"
 
 
 if __name__ == '__main__':
     t1 = threading.Thread(
-        target=time_cut,
-        args=(test_ID,),
+        target=local_single_test,
+        args=(test_ID, test_URL),
     )
     t2 = threading.Thread(target=app_RUN)
     t1.start()

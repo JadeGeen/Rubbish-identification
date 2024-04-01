@@ -5,7 +5,7 @@ from datetime import datetime
 
 from Config import config
 
-test_save_path = r'Data'
+test_save_path = r'./Data'
 
 
 # 切帧
@@ -13,7 +13,7 @@ def frame_cut(url):
     video = cv2.VideoCapture(url)
     ret, pic = video.read()
     cut_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    cv2.imencode('.jpg', pic)[1].tofile(test_save_path + "\\test.jpg")
+    cv2.imencode('.jpg', pic)[1].tofile(test_save_path + "/test.jpg")
     video.release()
     return pic, cut_time
 
@@ -36,6 +36,25 @@ def fileprocess(ID, url, sec):
         time.sleep(sec)
 
 
+# 本地视频单图测试
+def local_single_test(ID, url):
+    pic, cut_time = frame_cut(url)
+
+    # 算法服务器暂时起不来
+    '''
+    requests.post(
+        config['Alg_addr'] + '/upload',
+        data={
+            'target': pic,
+            'contra': False,
+            'userID': ID,
+            'Imgld': 0,
+            'time_msg': cut_time,
+        },
+    )
+    '''
+
+
 # 单视频单图测试
 def time_cut(ID):
     r = requests.post(config['Getjs_addr'])
@@ -51,7 +70,13 @@ def time_cut(ID):
     pic, cut_time = frame_cut(url)
     requests.post(
         config['Alg_addr'] + '/upload',
-        data={'target': pic, 'contra': False, 'time_msg': cut_time, 'userID': ID},
+        data={
+            'target': pic,
+            'contra': False,
+            'Imgld': 0,
+            'time_msg': cut_time,
+            'userID': ID
+        },
     )
 
     '''

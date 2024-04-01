@@ -1,4 +1,4 @@
-from init import myconfig
+from .init import myconfig
 import numpy as np
 class my_struct:
     def __init__(self, camera_id, time_msg, white_items, black_items, pic_array):
