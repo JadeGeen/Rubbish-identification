@@ -1,11 +1,11 @@
 import numpy as np
 import time
 
-from ChangeDetection.SuperPointPretrainedNetwork import superpoint as sp
+from Step1_contras.SuperPointPretrainedNetwork import superpoint as sp
 import cv2
-from ChangeDetection.src.Deep.base import main
-from ChangeDetection.src.traditional import sift
-from ChangeDetection.src.traditional import new_muliti_homography
+from Step1_contras.src.Deep.base import main
+from Step1_contras.src.traditional import sift
+from Step1_contras.src.traditional import new_muliti_homography
 
 superpoint = sp.init_super_point()
 kp1 = None
