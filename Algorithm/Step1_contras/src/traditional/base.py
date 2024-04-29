@@ -5,7 +5,7 @@ import numpy as np
 cv2.ocl.setUseOpenCL(False)
 import math
 import time
-from ChangeDetection.src.util.utils import print_black
+from Step1_contras.src.util.utils import print_black
 
 def main(img1, img2, get_kp_and_des, get_des_from_kp,threshold = 550, func = 2):
     # 直方图均衡化 + 转换为灰度图

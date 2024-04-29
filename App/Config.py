@@ -1,6 +1,6 @@
 # App配置信息
 config = {
-    'Alg_addr': '0.0.0.0',
+    'Alg_addr': '127.0.0.0:5000',
     'Restarget_addr': '0.0.0.0',
     'Login_msg': r'Data/Login_msg.txt',
     'Getjs_addr': 'http://47.122.29.181:8088/StandardApiAction_login.action?account=admin&password=admin',

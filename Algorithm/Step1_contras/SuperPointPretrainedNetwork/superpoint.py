@@ -710,7 +710,7 @@ def init_super_point():
     parser = argparse.ArgumentParser(description='PyTorch SuperPoint Demo.')
     # parser.add_argument('input', type=str, default='',
     #                     help='Image directory or movie file or "camera" (for webcam).')
-    parser.add_argument('--weights_path', type=str, default='/disk2/zhanglingming/nationGrid/python/ChangeDetection/SuperPointPretrainedNetwork/superpoint_v1.pth',
+    parser.add_argument('--weights_path', type=str, default='/home/ubuntu/Rubbish-identification/Algorithm/Step1_contras/SuperPointPretrainedNetwork/superpoint_v1.pth',
                         help='Path to pretrained weights file (default: superpoint_v1.pth).')
     parser.add_argument('--img_glob', type=str, default='*.jpg',
                         help='Glob match if directory of images is specified (default: \'*.png\').')
@@ -738,7 +738,7 @@ def init_super_point():
                         help='OpenCV webcam video capture ID, usually 0 or 1 (default: 0).')
     parser.add_argument('--waitkey', type=int, default=1,
                         help='OpenCV waitkey time in ms (default: 1).')
-    parser.add_argument('--cuda', action='store_false',
+    parser.add_argument('--cuda', action='store_false',default=False,
                         help='Use cuda GPU to speed up network processing speed (default: False)')
     # parser.add_argument('--no_display', action='store_true',
     #                     help='Do not display images to screen. Useful if running remotely (default: False).')

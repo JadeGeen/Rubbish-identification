@@ -40,8 +40,6 @@ def fileprocess(ID, url, sec):
 def local_single_test(ID, url):
     pic, cut_time = frame_cut(url)
 
-    # 算法服务器暂时起不来
-    '''
     requests.post(
         config['Alg_addr'] + '/upload',
         data={
@@ -52,7 +50,6 @@ def local_single_test(ID, url):
             'time_msg': cut_time,
         },
     )
-    '''
 
 
 # 单视频单图测试

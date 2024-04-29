@@ -85,4 +85,4 @@ def post_Pic():
 
 
 def app_RUN():
-    app.run()
+    app.run(host="127.0.0.0",port=5000)
