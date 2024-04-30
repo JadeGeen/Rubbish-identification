@@ -8,6 +8,8 @@ def send_res(userID, Imgld, time_msg, bbox_list, target):
     res = api_save(userID, time_msg, bbox_list, target)
     allres=res[0]
     for bbox in allres:
+        print(bbox)
+        '''
         requests.post(
         config['Restarget_addr'],
         data={
@@ -21,4 +23,5 @@ def send_res(userID, Imgld, time_msg, bbox_list, target):
             'TargetD': ' ',
             'Img': res[1],
         },  
-    )
+        )
+        '''

@@ -8,7 +8,7 @@ from flask import Flask, request
 
 from api import api
 
-SERVER_URL = "0.0.0" #调度服务器url
+SERVER_URL = "111.229.145.14/alg-postPic" #调度服务器url
 
 app = Flask(__name__)
 
@@ -51,4 +51,4 @@ def upload():
 
 if __name__ == '__main__':
     logger.info(f"server is running")
-    app.run()
+    app.run(host="127.0.0.0",port=5001)

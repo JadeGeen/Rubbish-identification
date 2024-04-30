@@ -6,8 +6,8 @@ import cv2.ml
 cv2.ocl.setUseOpenCL(False)
 import math
 import time
-from ChangeDetection.src.util.utils import print_black
-from ChangeDetection.src.util import multi_homography
+from Step1_contras.src.util.utils import print_black
+from Step1_contras.src.util import multi_homography
 
 
 def main(img1, img2, kp1,des1,kp2,des2, get_des_from_kp,threshold = 550,th1=0.6,th2=0.3,func = 2):

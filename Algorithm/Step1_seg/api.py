@@ -1,6 +1,6 @@
 import numpy as np
-from utils.clip import clip_pic
-from utils.sam import SamModel, sam_checkpoint, model_type, device
+from Step1_seg.utils.clip import clip_pic
+from Step1_seg.utils.sam import SamModel, sam_checkpoint, model_type, device
 
 def api(image:np.ndarray , n: int, overlap: float):
     pic_list,bias_list = clip_pic(image, n, overlap)

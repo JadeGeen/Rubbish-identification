@@ -6,8 +6,8 @@ model_type = "vit_h"
 device = "cuda"
 
 
-class SamModel(model_type, sam_checkpoint,device):
-    def __init__(self):
+class SamModel():
+    def __init__(self,model_type, sam_checkpoint,device):
         super().__init__(sam_checkpoint)
         self.sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
         self.sam.to(device=device)
